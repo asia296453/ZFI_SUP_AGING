@@ -163,12 +163,60 @@ sap.ui.define([
         onBeforeRebindTable: function (oEvent) {
             var oBindingParams = oEvent.getParameter("bindingParams");
             var aFilters = this.buildFiltersForCustomFields();
-            var aStandardFilters = oBindingParams.filters;
-            debugger;
-            aFilters = aFilters.concat(aStandardFilters)
-            oBindingParams.filters = aFilters;
-        },
+            oBindingParams.filters = aFilters.concat(oBindingParams.filters);
 
+            const oTable = oEvent.getSource().getTable();
+
+            if (!this._bTotalHandlerAttached) {
+                this._bTotalHandlerAttached = true;
+                oTable.attachUpdateFinished(this._calculateAgingTotals, this);
+            }
+        },
+        _calculateAgingTotals: function () {
+            const oTable = this.byId("smartTable").getTable();
+            const aItems = oTable.getItems();
+
+            const totals = {
+                NotDue: 0,
+                col0to30: 0,
+                col31to60: 0,
+                col61to90: 0,
+                col91to120: 0,
+                col121to365: 0,
+                col365: 0,
+                Total: 0
+            };
+
+
+            aItems.forEach(oItem => {
+                const oCtx = oItem.getBindingContext();
+                if (!oCtx) return;
+
+                const oData = oCtx.getObject();
+                totals.NotDue += Number(oData.NotDue || 0);
+                totals.col0to30 += Number(oData.col0to30 || 0);
+                totals.col31to60 += Number(oData.col31to60 || 0);
+                totals.col61to90 += Number(oData.col61to90 || 0);
+                totals.col91to120 += Number(oData.col91to120 || 0);
+                totals.col121to365 += Number(oData.col121to365 || 0);
+                totals.col365 += Number(oData.col365 || 0);
+                totals.Total += Number(oData.Total || 0);
+                console.log(oItem.getBindingContext().getObject());
+
+            });
+
+            this._setFooterValues(totals);
+        },
+        _setFooterValues: function (totals) {
+            this.byId("ftrNotDue").setText(totals.NotDue.toFixed(2));
+            this.byId("ftr_col0to30").setText(totals.col0to30.toFixed(2));
+            this.byId("ftr31_60").setText(totals.col31to60.toFixed(2));
+            this.byId("ftr61_90").setText(totals.col61to90.toFixed(2));
+            this.byId("ftr91_120").setText(totals.col91to120.toFixed(2));
+            this.byId("ftr121_365").setText(totals.col121to365.toFixed(2));
+            this.byId("ftr365").setText(totals.col365.toFixed(2));
+            this.byId("ftrTotal").setText(totals.Total.toFixed(2));
+        },
         buildFiltersForCustomFields: function () {
             var oFilterBar = this.getView().byId("fbPreqs");
             var aFilters = [];
@@ -271,7 +319,7 @@ sap.ui.define([
                 aCols = this.createColumnConfig();
                 aData = res;
 
-                
+
                 oSettings = {
                     workbook: {
                         columns: aCols
