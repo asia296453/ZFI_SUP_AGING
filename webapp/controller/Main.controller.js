@@ -10,11 +10,66 @@ sap.ui.define([
 
     return Controller.extend("zfisupaging.controller.Main", {
         onInit() {
+            var oval = [];
+            var sval ={
+                "key":"",
+                "value":"Normal Items"
+            };
+            oval.push(sval);
+            var sval ={
+                "key":"A",
+                "value":"Special G/L Transactions"
+            };
+            oval.push(sval);
+            this.getOwnerComponent().getModel("typedtls").setProperty("/results", oval);
+            this.getOwnerComponent().getModel("typedtls").refresh();
+
             this.getOwnerComponent().getModel("LocalModel").setProperty("/Companycode", "5910");
             this.getOwnerComponent().getModel("LocalModel").setProperty("/P_DateFunction", "TODAY");
             this.getOwnerComponent().getModel("LocalModel").setProperty("/Displaycurrency", "SAR");
             this.getOwnerComponent().getModel("LocalModel").refresh();
+
+            
         },
+        sortAllColumns: function (evt) {
+            //asia
+            debugger;
+            // if (this.updatecount < 2) {
+            //     this.updatecount = this.updatecount + 1;
+                if (evt.getSource()._aSortedColumns !== undefined && evt.getSource()._aSortedColumns.length > 0) {
+                    var sortOrder = evt.getSource()._aSortedColumns[0].getProperty("sortOrder")
+                    var sortProperty = evt.getSource()._aSortedColumns[0].getProperty("sortProperty");
+                                           
+                    if (sortOrder === "Descending") {
+                        sortOrder = sortProperty+' desc';
+                    }
+                    else if (sortOrder === "Ascending") {
+                        sortOrder = sortProperty+' asc';
+                    }
+                    debugger;
+                    
+                 if(this.sortProperty !== sortOrder){
+                     this.sortProperty = sortOrder;
+                    this.showBusy(true);
+                    var aFilters = this.buildFiltersForCustomFields();
+                    this.getView().getModel().read("/AgeingSet", {
+                        filters: [aFilters],
+                        urlParameters: {
+                            "$orderby": sortOrder
+                        },
+                        success: function (oData) {
+                            debugger;
+                            this.getView().getModel("tableModel").setProperty("/results",oData.results);
+                            this.showBusy(false);
+                        }.bind(this),
+                        error: function (oError) {
+                            this.showBusy(false);
+                        }.bind(this)
+                    });
+                }
+            }
+        },
+
         SearchP_DateFunction: function (evt) {
             var sValue = evt.getParameter("value");
             var oFilter = new sap.ui.model.Filter("Datefunction", sap.ui.model.FilterOperator.EQ, sValue);
@@ -124,7 +179,23 @@ sap.ui.define([
         },
 
         onSearch: function (oEvent) {
-            this.byId("smartTable").rebindTable();
+        //      var aFilters = this.buildFiltersForCustomFields();
+        //    this.byId("smartTable").rebindTable();
+        this.updatecount = 0;
+         var aFilters = this.buildFiltersForCustomFields();
+             this.getOdata("/AgeingSet", "tableModel", aFilters).then((res) => {
+            
+           
+             const oTable =  this.getView().byId("table1");
+                
+            if (!this._bTotalHandlerAttached) {
+                this._bTotalHandlerAttached = true;
+                //oTable.attachUpdateFinished(this._calculateAgingTotals, this);
+               // oTable.attachRowsUpdated(this._calculateAgingTotals1, this);
+            //    oTable.attachRowsUpdated(this.sortAllColumns,this);
+            }
+            // this.getView().byId("table1").getRowMode().setFixedBottomRowCount(1);
+             });
         },
 
         getOdata: function (surl, smodelname, ofilter, stype) {
@@ -148,7 +219,25 @@ sap.ui.define([
                         filters: [ofilter],
                         success: function (oData) {
                             this.showBusy(false);
-                            this.getOwnerComponent().getModel(smodelname).setProperty("/results", oData.results);
+                            if(smodelname === 'tableModel'){
+                                var index = oData.results.findIndex(function(item, i){
+                                    return item.Supplier === "Total";
+                                });
+                                debugger;
+                                    var selCurrRow = oData.results.filter(function (el ,idx) {
+                                        return el.Supplier === "Total";
+                                    });
+                                if (selCurrRow.length > 0) {
+                                    this.getView().getModel("totals").setProperty("/results",selCurrRow);
+                                    this.getView().getModel("totals").refresh(true);
+                                    oData.results.splice(index,1);
+                                    this.getView().getModel("tableModel").setProperty("/results",oData.results);
+                                    this.getView().getModel("tableModel").refresh(true);
+                                }
+                            }else{
+                                this.getOwnerComponent().getModel(smodelname).setProperty("/results", oData.results);
+                            }
+                            
                             resolve(oData.results);
                         }.bind(this),
                         error: function (oError) {
@@ -163,16 +252,25 @@ sap.ui.define([
         onBeforeRebindTable: function (oEvent) {
             var oBindingParams = oEvent.getParameter("bindingParams");
             var aFilters = this.buildFiltersForCustomFields();
+             this.getOdata("/AgeingSet", "tableModel", aFilters).then((res) => {
+            debugger;
+             });
             oBindingParams.filters = aFilters.concat(oBindingParams.filters);
 
             const oTable = oEvent.getSource().getTable();
-
+           
             if (!this._bTotalHandlerAttached) {
                 this._bTotalHandlerAttached = true;
-                oTable.attachUpdateFinished(this._calculateAgingTotals, this);
+                //oTable.attachUpdateFinished(this._calculateAgingTotals, this);
+                oTable.attachRowsUpdated(this._calculateAgingTotals, this);
             }
         },
+        _calculateAgingTotals1: function () {
+             debugger;
+        }   ,
         _calculateAgingTotals: function () {
+            debugger;
+              this.getView().byId("rowtable").getRowMode().setFixedBottomRowCount(1);
             const oTable = this.byId("smartTable").getTable();
             const aItems = oTable.getItems();
 
@@ -232,8 +330,10 @@ sap.ui.define([
                         }
                         break;
                     case "sap.m.MultiComboBox":
-                        var oKey = oControl.getSelectedKey();
-                        aFilters.push(new Filter(oItem.getName(), FilterOperator.EQ, oKey));
+                        oControl.getSelectedItems().forEach(function (itm) {
+                             var oKey = itm.getProperty("key");
+                             aFilters.push(new Filter(oItem.getName(), FilterOperator.EQ, oKey));
+                        });                       
                         break;
                     case "sap.m.Input":
                         var sValue = oControl.getValue();

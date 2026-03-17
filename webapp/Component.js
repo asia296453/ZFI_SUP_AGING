@@ -21,6 +21,10 @@ sap.ui.define([
            this.setModel(new sap.ui.model.json.JSONModel(), "ReportModel");
             this.setModel(new sap.ui.model.json.JSONModel(), "LocalModel");
             this.setModel(new sap.ui.model.json.JSONModel(), "Supplier");
+            this.setModel(new sap.ui.model.json.JSONModel(), "typedtls");
+            this.setModel(new sap.ui.model.json.JSONModel(), "tableModel");
+            this.setModel(new sap.ui.model.json.JSONModel(), "notdue");
+            this.setModel(new sap.ui.model.json.JSONModel(), "totals");
             // enable routing
             this.getRouter().initialize();
         }
