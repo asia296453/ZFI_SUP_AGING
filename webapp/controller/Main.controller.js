@@ -29,7 +29,16 @@ sap.ui.define([
             this.getOwnerComponent().getModel("LocalModel").setProperty("/Displaycurrency", "SAR");
             this.getOwnerComponent().getModel("LocalModel").refresh();
 
-            
+            this.getOwnerComponent().getModel("notdue").setProperty("/vis", false);
+                this.getOwnerComponent().getModel("notdue").refresh();
+        },
+
+        updateSerialNo: function (sText) {
+            var sTxt = "";
+            if (sText !== null && sText !== undefined && sText !== "") {
+                sTxt = sText.replace(/^0+/, '');
+            }
+            return sTxt;
         },
         sortAllColumns: function (evt) {
             //asia
@@ -79,7 +88,7 @@ sap.ui.define([
             debugger;
             var oval = evt.getParameter("selectedItem").getProperty("title");
             var sSelecteddesc = evt.getParameter("selectedItem").getProperty("description");
-            this.getView().getModel("LocalModel").setProperty("/P_DateFunction", oval);
+            this.getView().getModel("LocalModel").setProperty("/P_DateFunction", sSelecteddesc);
             this.getView().getModel("LocalModel").refresh(true);
             evt.getSource().getBinding("items").filter([]);
         },
@@ -135,10 +144,20 @@ sap.ui.define([
         },
         ConfSupplier: function (evt) {
             debugger;
-            var oval = evt.getParameter("selectedItem").getProperty("title");
-            var sSelecteddesc = evt.getParameter("selectedItem").getProperty("description");
-            this.getView().getModel("LocalModel").setProperty("/Supplier", oval);
-            this.getView().getModel("LocalModel").refresh(true);
+            // var oval = evt.getParameter("selectedItem").getProperty("title");
+            // var sSelecteddesc = evt.getParameter("selectedItem").getProperty("description");
+            // this.getView().getModel("LocalModel").setProperty("/Supplier", oval);
+            // this.getView().getModel("LocalModel").refresh(true);
+
+            var aContexts = evt.getParameter("selectedContexts");
+            if (aContexts && aContexts.length) {
+                var oval = aContexts.map(function (oContext) {
+                    return oContext.getObject().Lifnr;
+                }).join(", ");
+                var stype = "/" + this.stype;
+                this.getView().getModel("LocalModel").setProperty("/Supplier", oval);
+                this.getView().getModel("LocalModel").refresh(true);
+            }
             evt.getSource().getBinding("items").filter([]);
         },
 
@@ -395,7 +414,7 @@ sap.ui.define([
                         break;
                     case "sap.m.ComboBox": oControl.setSelectedKey("");
                         break;
-                    case "sap.m.MultiComboBox": oControl.setSelectedKeys("");
+                    case "sap.m.MultiComboBox": oControl.setSelectedItems([]);
                         break;
                     case "sap.m.Select": oControl.setSelectedKey("");
                         break;
@@ -407,6 +426,32 @@ sap.ui.define([
             this.getOwnerComponent().getModel("LocalModel").refresh();
         },
 
+        onselectcheckbox:function(e){
+            debugger;
+            var bflag = e.getParameter("selected");
+
+            if(bflag){
+                this.getOwnerComponent().getModel("notdue").setProperty("/vis", true);
+                this.getOwnerComponent().getModel("notdue").refresh();
+            }else{
+                this.getOwnerComponent().getModel("notdue").setProperty("/vis", false);
+                this.getOwnerComponent().getModel("notdue").refresh();
+            }
+        },
+        formatDate: function (dt) {
+            if (dt === undefined || dt === null || dt === "") {
+                return;
+            }
+          var  dt = new Date(dt),
+                month = '' + (dt.getMonth() + 1),
+                day = '' + dt.getDate(),
+                year = dt.getFullYear();
+            if (month.length < 2)
+                month = '0' + month;
+            if (day.length < 2)
+                day = '0' + day;
+            return [year, month, day].join('');
+        },
         onExport: function (OEvt) {
             var ofilters = this.buildFiltersForCustomFields();
 

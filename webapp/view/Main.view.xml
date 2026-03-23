@@ -42,7 +42,7 @@
                             </fb:control>
                         </fb:FilterGroupItem>
 
-                        <fb:FilterGroupItem
+                        <!-- <fb:FilterGroupItem
                             name="Displaycurrency"
                             label="Display Currency"
                             groupName="default"
@@ -56,7 +56,7 @@
                                     valueHelpOnly="true"
                                 />
                             </fb:control>
-                        </fb:FilterGroupItem>
+                        </fb:FilterGroupItem> -->
 
                         <fb:FilterGroupItem
                             name="Companycode"
@@ -120,7 +120,7 @@
 						<t:Column width="5rem" sortProperty="Supplier">
 							<Label text="Supplier" />
 							<t:template>
-								<Text text="{tableModel>Supplier}"/>
+								<Text text="{tableModel>SP}"/>
 							</t:template>
 						</t:Column>
 						<t:Column  width="15rem"  sortProperty="Suppliername">
@@ -213,23 +213,125 @@
 								<Text text="{tableModel>Total}" wrapping="false"/>
 							</t:template>
 							</t:Column>
-							<t:Column width="7rem" sortProperty="TypeLocalForeign">
-							<Label text="Type Local/Foreign" />
+							<t:Column width="7rem" sortProperty="TypeLocalForeign" >
+							<Label text="Type Local/Foreign"  wrapping="true"/>
 							<t:template>
-								<Text text="{tableModel>TypeLocalForeign}" wrapping="false"/>
+								<Text text="{tableModel>TypeLocalForeign}" wrapping="true"/>
 							</t:template>
 							</t:Column>
-							<t:Column width="7rem" sortProperty="Typeofservicesdesc">
-							<Label text="Type of services" />
+							<t:Column width="10rem" sortProperty="Typeofservicesdesc">
+							<Label text="Type of services" wrapping="true"/>
 							<t:template>
-								<Text text="{tableModel>Typeofservicesdesc}" wrapping="false"/>
+								<Text text="{tableModel>Typeofservicesdesc}" wrapping="true"/>
 							</t:template>
 							</t:Column>
 							</t:columns>
 							</t:Table>
                 
 
-                  <t:Table  selectionMode="None"  rows="{path: 'totals>/results'}"	threshold="15" >
+				 <t:Table  selectionMode="None"  rows="{path: 'totals>/results'}"	threshold="1" >					
+					<t:columns>
+						<t:Column width="5rem" >
+							<Label text="Totals" />
+							<t:template>
+								<Text text="Totals"/>
+							</t:template>
+						</t:Column>
+						<t:Column  width="15rem"  >
+							<Label text="" />
+							<t:template>
+								<Text text="{totals>Suppliername}" wrapping="true"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="7rem" visible="{notdue>/vis}" >
+							<Label text="-30 - 0" />
+							<t:template>
+								<Text text="{totals>col30to0}" wrapping="false"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="7rem" visible="{notdue>/vis}" >
+							<Label text="-60 - -31" />
+							<t:template>
+								<Text text="{totals>col60to30}" wrapping="false"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="7rem" visible="{notdue>/vis}" >
+							<Label text="-90 - -61" />
+							<t:template>
+								<Text text="{totals>col90to60}" wrapping="false"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="7rem" visible="{notdue>/vis}" >
+							<Label text="-120 - -91" />
+							<t:template>
+								<Text text="{totals>col120to90}" wrapping="false"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="7rem" visible="{notdue>/vis}" >
+							<Label text="-365 - -121" />
+							<t:template>
+								<Text text="{totals>col365to120}" wrapping="false"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="7rem" visible="{notdue>/vis}" >
+							<Label text=">-365" />
+							<t:template>
+								<Text text="{totals>col365neg}" wrapping="false"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="7rem" >
+							<Label text="Not Due" />
+							<t:template>
+								<Text text="{totals>NotDue}" wrapping="false"/>
+							</t:template>
+						</t:Column>
+						<t:Column  width="7rem" >
+							<Label text="0 - 30"/>
+							<t:template>
+								<Text text="{totals>col0to30}" wrapping="false"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="7rem" >
+							<Label text="31 - 60" />
+							<t:template>
+								<Text text="{totals>col31to60}" wrapping="false"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="7rem" >
+							<Label text="61 - 90" />
+							<t:template>
+								<Text text="{totals>col61to90}" wrapping="false"/>
+							</t:template>
+							</t:Column>
+					<t:Column width="7rem" >
+							<Label text="91 - 120" />
+							<t:template>
+								<Text text="{totals>col91to120}" wrapping="false"/>
+							</t:template>
+							</t:Column>
+					<t:Column width="7rem" >
+							<Label text="121 - 365" />
+							<t:template>
+								<Text text="{totals>col121to365}" wrapping="false"/>
+							</t:template>
+							</t:Column>
+							<t:Column width="7rem" >
+							<Label text="365 >" />
+							<t:template>
+								<Text text="{totals>col365}" wrapping="false"/>
+							</t:template>
+							</t:Column>
+							<t:Column width="7rem" >
+							<Label text="Total" />
+							<t:template>
+								<Text text="{totals>Total}" wrapping="false"/>
+							</t:template>
+							</t:Column>
+							
+							</t:columns>
+							</t:Table>
+           
+                  <!-- <t:Table  selectionMode="None"  rows="{path: 'totals>/results'}"	threshold="15" >
 					
 					<t:columns>
 						<t:Column width="5rem" >
@@ -341,7 +443,7 @@
 							</t:template>
 							</t:Column>
 							</t:columns>
-							</t:Table>
+							</t:Table> -->
             </ScrollContainer>
         </content>
     </Page>
