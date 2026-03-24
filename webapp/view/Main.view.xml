@@ -129,91 +129,134 @@
 								<Text text="{tableModel>Suppliername}" wrapping="true"/>
 							</t:template>
 						</t:Column>
-						<t:Column width="7rem" visible="{notdue>/vis}" sortProperty="col30to0"  >
+						<t:Column width="9rem" visible="{notdue>/vis}" sortProperty="col30to0"  >
 							<Label text="-30 - 0" />
 							<t:template>
-								<Text text="{tableModel>col30to0}" wrapping="false"/>
+								<Text text="{path: 'tableModel>col30to0',
+                    type: 'sap.ui.model.odata.type.Decimal', 
+                    formatOptions: { emptyString: null }, constraints: { scale: 3, minimum: '3' } }"
+               />
 							</t:template>
 						</t:Column>
-						<t:Column width="7rem" visible="{notdue>/vis}" sortProperty="col60to30">
+						<t:Column width="9rem" visible="{notdue>/vis}" sortProperty="col60to30">
 							<Label text="-60 - -31" />
 							<t:template>
-								<Text text="{tableModel>col60to30}" wrapping="false"/>
+								<Text text="{path: 'tableModel>col60to30',
+                    type: 'sap.ui.model.odata.type.Decimal', 
+                    formatOptions: { emptyString: null }, constraints: { scale: 3, minimum: '3' } }"
+               />
 							</t:template>
 						</t:Column>
-						<t:Column width="7rem" visible="{notdue>/vis}" sortProperty="col90to60">
+						<t:Column width="9rem" visible="{notdue>/vis}" sortProperty="col90to60">
 							<Label text="-90 - -61" />
 							<t:template>
-								<Text text="{tableModel>col90to60}" wrapping="false"/>
+								<Text text="{path: 'tableModel>col90to60',
+                    type: 'sap.ui.model.odata.type.Decimal', 
+                    formatOptions: { emptyString: null }, constraints: { scale: 3, minimum: '3' } }"
+               />
 							</t:template>
 						</t:Column>
-						<t:Column width="7rem" visible="{notdue>/vis}" sortProperty="col120to90">
+						<t:Column width="9rem" visible="{notdue>/vis}" sortProperty="col120to90">
 							<Label text="-120 - -91" />
 							<t:template>
-								<Text text="{tableModel>col120to90}" wrapping="false"/>
+								<Text text="{path: 'tableModel>col120to90',
+                    type: 'sap.ui.model.odata.type.Decimal', 
+                    formatOptions: { emptyString: null }, constraints: { scale: 3, minimum: '3' } }"
+               />
 							</t:template>
 						</t:Column>
-						<t:Column width="7rem" visible="{notdue>/vis}" sortProperty="col365to120">
+						<t:Column width="9rem" visible="{notdue>/vis}" sortProperty="col365to120">
 							<Label text="-365 - -121" />
 							<t:template>
-								<Text text="{tableModel>col365to120}" wrapping="false"/>
+								<Text text="{path: 'tableModel>col365to120',
+                    type: 'sap.ui.model.odata.type.Decimal', 
+                    formatOptions: { emptyString: null }, constraints: { scale: 3, minimum: '3' } }"
+               />
 							</t:template>
 						</t:Column>
-						<t:Column width="7rem" visible="{notdue>/vis}" sortProperty="col365neg">
+						<t:Column width="9rem" visible="{notdue>/vis}" sortProperty="col365neg">
 							<Label text=">-365" />
 							<t:template>
-								<Text text="{tableModel>col365neg}" wrapping="false"/>
+								<Text text="{path: 'tableModel>col365neg',
+                    type: 'sap.ui.model.odata.type.Decimal', 
+                    formatOptions: { emptyString: null }, constraints: { scale: 3, minimum: '3' } }"
+               />
 							</t:template>
 						</t:Column>
-						<t:Column width="7rem" sortProperty="NotDue">
+						<t:Column width="9rem" sortProperty="NotDue">
 							<Label text="Not Due" />
 							<t:template>
-								<Text text="{tableModel>NotDue}" wrapping="false"/>
+								<Text text="{path: 'tableModel>NotDue',
+                    type: 'sap.ui.model.odata.type.Decimal', 
+                    formatOptions: { emptyString: null }, constraints: { scale: 3, minimum: '3' } }"
+               />
+								
 							</t:template>
 						</t:Column>
-						<t:Column  width="7rem" sortProperty="col0to30">
+						<t:Column  width="9rem" sortProperty="col0to30">
 							<Label text="0 - 30"/>
 							<t:template>
-								<Text text="{tableModel>col0to30}" wrapping="false"/>
+								<Text text="{path: 'tableModel>col0to30',
+                    type: 'sap.ui.model.odata.type.Decimal', 
+                    formatOptions: { emptyString: null }, constraints: { scale: 3, minimum: '3' } }"
+               />
 							</t:template>
 						</t:Column>
-						<t:Column width="7rem" sortProperty="col31to60">
+						<t:Column width="9rem" sortProperty="col31to60">
 							<Label text="31 - 60" />
 							<t:template>
-								<Text text="{tableModel>col31to60}" wrapping="false"/>
+								<Text text="{path: 'tableModel>col31to60',
+                    type: 'sap.ui.model.odata.type.Decimal', 
+                    formatOptions: { emptyString: null }, constraints: { scale: 3, minimum: '3' } }"
+               />
 							</t:template>
 						</t:Column>
-						<t:Column width="7rem" sortProperty="col61to90">
+						<t:Column width="9rem" sortProperty="col61to90">
 							<Label text="61 - 90" />
 							<t:template>
-								<Text text="{tableModel>col61to90}" wrapping="false"/>
+								<Text text="{path: 'tableModel>col61to90',
+                    type: 'sap.ui.model.odata.type.Decimal', 
+                    formatOptions: { emptyString: null }, constraints: { scale: 3, minimum: '3' } }"
+               />
 							</t:template>
 							</t:Column>
-					<t:Column width="7rem" sortProperty="col91to120">
+					<t:Column width="9rem" sortProperty="col91to120">
 							<Label text="91 - 120" />
 							<t:template>
-								<Text text="{tableModel>col91to120}" wrapping="false"/>
+								<Text text="{path: 'tableModel>col91to120',
+                    type: 'sap.ui.model.odata.type.Decimal', 
+                    formatOptions: { emptyString: null }, constraints: { scale: 3, minimum: '3' } }"
+               />
 							</t:template>
 							</t:Column>
-					<t:Column width="7rem" sortProperty="col121to365">
+					<t:Column width="9rem" sortProperty="col121to365">
 							<Label text="121 - 365" />
 							<t:template>
-								<Text text="{tableModel>col121to365}" wrapping="false"/>
+								<Text text="{path: 'tableModel>col121to365',
+                    type: 'sap.ui.model.odata.type.Decimal', 
+                    formatOptions: { emptyString: null }, constraints: { scale: 3, minimum: '3' } }"
+               />
 							</t:template>
 							</t:Column>
-							<t:Column width="7rem" sortProperty="col365">
+							<t:Column width="9rem" sortProperty="col365">
 							<Label text="365 >" />
 							<t:template>
-								<Text text="{tableModel>col365}" wrapping="false"/>
+								<Text text="{path: 'tableModel>col365',
+                    type: 'sap.ui.model.odata.type.Decimal', 
+                    formatOptions: { emptyString: null }, constraints: { scale: 3, minimum: '3' } }"
+               />
 							</t:template>
 							</t:Column>
-							<t:Column width="7rem" sortProperty="Total">
+							<t:Column width="9rem" sortProperty="Total">
 							<Label text="Total" />
 							<t:template>
-								<Text text="{tableModel>Total}" wrapping="false"/>
+								<Text text="{path: 'tableModel>Total',
+                    type: 'sap.ui.model.odata.type.Decimal', 
+                    formatOptions: { emptyString: null }, constraints: { scale: 3, minimum: '3' } }"
+               />
 							</t:template>
 							</t:Column>
-							<t:Column width="7rem" sortProperty="TypeLocalForeign" >
+							<t:Column width="9rem" sortProperty="TypeLocalForeign" >
 							<Label text="Type Local/Foreign"  wrapping="true"/>
 							<t:template>
 								<Text text="{tableModel>TypeLocalForeign}" wrapping="true"/>
@@ -243,88 +286,130 @@
 								<Text text="{totals>Suppliername}" wrapping="true"/>
 							</t:template>
 						</t:Column>
-						<t:Column width="7rem" visible="{notdue>/vis}" >
+						<t:Column width="9rem" visible="{notdue>/vis}" >
 							<Label text="-30 - 0" />
 							<t:template>
-								<Text text="{totals>col30to0}" wrapping="false"/>
+								<Text text="{path: 'totals>col30to0',
+                    type: 'sap.ui.model.odata.type.Decimal', 
+                    formatOptions: { emptyString: null }, constraints: { scale: 3, minimum: '3' } }"
+               />
 							</t:template>
 						</t:Column>
-						<t:Column width="7rem" visible="{notdue>/vis}" >
+						<t:Column width="9rem" visible="{notdue>/vis}" >
 							<Label text="-60 - -31" />
 							<t:template>
-								<Text text="{totals>col60to30}" wrapping="false"/>
+								<Text text="{path: 'totals>col60to30',
+                    type: 'sap.ui.model.odata.type.Decimal', 
+                    formatOptions: { emptyString: null }, constraints: { scale: 3, minimum: '3' } }"
+               />
 							</t:template>
 						</t:Column>
-						<t:Column width="7rem" visible="{notdue>/vis}" >
+						<t:Column width="9rem" visible="{notdue>/vis}" >
 							<Label text="-90 - -61" />
 							<t:template>
-								<Text text="{totals>col90to60}" wrapping="false"/>
+								<Text text="{path: 'totals>col90to60',
+                    type: 'sap.ui.model.odata.type.Decimal', 
+                    formatOptions: { emptyString: null }, constraints: { scale: 3, minimum: '3' } }"
+               />
 							</t:template>
 						</t:Column>
-						<t:Column width="7rem" visible="{notdue>/vis}" >
+						<t:Column width="9rem" visible="{notdue>/vis}" >
 							<Label text="-120 - -91" />
 							<t:template>
-								<Text text="{totals>col120to90}" wrapping="false"/>
+								<Text text="{path: 'totals>col120to90',
+                    type: 'sap.ui.model.odata.type.Decimal', 
+                    formatOptions: { emptyString: null }, constraints: { scale: 3, minimum: '3' } }"
+               />
 							</t:template>
 						</t:Column>
-						<t:Column width="7rem" visible="{notdue>/vis}" >
+						<t:Column width="9rem" visible="{notdue>/vis}" >
 							<Label text="-365 - -121" />
 							<t:template>
-								<Text text="{totals>col365to120}" wrapping="false"/>
+								<Text text="{path: 'totals>col365to120',
+                    type: 'sap.ui.model.odata.type.Decimal', 
+                    formatOptions: { emptyString: null }, constraints: { scale: 3, minimum: '3' } }"
+               />
 							</t:template>
 						</t:Column>
-						<t:Column width="7rem" visible="{notdue>/vis}" >
+						<t:Column width="9rem" visible="{notdue>/vis}" >
 							<Label text=">-365" />
 							<t:template>
-								<Text text="{totals>col365neg}" wrapping="false"/>
+								<Text text="{path: 'totals>col365neg',
+                    type: 'sap.ui.model.odata.type.Decimal', 
+                    formatOptions: { emptyString: null }, constraints: { scale: 3, minimum: '3' } }"
+               />
 							</t:template>
 						</t:Column>
-						<t:Column width="7rem" >
+						<t:Column width="9rem" >
 							<Label text="Not Due" />
 							<t:template>
-								<Text text="{totals>NotDue}" wrapping="false"/>
+								<Text text="{path: 'totals>NotDue',
+                    type: 'sap.ui.model.odata.type.Decimal', 
+                    formatOptions: { emptyString: null }, constraints: { scale: 3, minimum: '3' } }"
+               />
 							</t:template>
 						</t:Column>
-						<t:Column  width="7rem" >
+						<t:Column  width="9rem" >
 							<Label text="0 - 30"/>
 							<t:template>
-								<Text text="{totals>col0to30}" wrapping="false"/>
+								<Text text="{path: 'totals>col0to30',
+                    type: 'sap.ui.model.odata.type.Decimal', 
+                    formatOptions: { emptyString: null }, constraints: { scale: 3, minimum: '3' } }"
+               />
 							</t:template>
 						</t:Column>
-						<t:Column width="7rem" >
+						<t:Column width="9rem" >
 							<Label text="31 - 60" />
 							<t:template>
-								<Text text="{totals>col31to60}" wrapping="false"/>
+								<Text text="{path: 'totals>col31to60',
+                    type: 'sap.ui.model.odata.type.Decimal', 
+                    formatOptions: { emptyString: null }, constraints: { scale: 3, minimum: '3' } }"
+               />
 							</t:template>
 						</t:Column>
-						<t:Column width="7rem" >
+						<t:Column width="9rem" >
 							<Label text="61 - 90" />
 							<t:template>
-								<Text text="{totals>col61to90}" wrapping="false"/>
+								<Text text="{path: 'totals>col61to90',
+                    type: 'sap.ui.model.odata.type.Decimal', 
+                    formatOptions: { emptyString: null }, constraints: { scale: 3, minimum: '3' } }"
+               />
 							</t:template>
 							</t:Column>
-					<t:Column width="7rem" >
+					<t:Column width="9rem" >
 							<Label text="91 - 120" />
 							<t:template>
-								<Text text="{totals>col91to120}" wrapping="false"/>
+								<Text text="{path: 'totals>col91to120',
+                    type: 'sap.ui.model.odata.type.Decimal', 
+                    formatOptions: { emptyString: null }, constraints: { scale: 3, minimum: '3' } }"
+               />
 							</t:template>
 							</t:Column>
-					<t:Column width="7rem" >
+					<t:Column width="9rem" >
 							<Label text="121 - 365" />
 							<t:template>
-								<Text text="{totals>col121to365}" wrapping="false"/>
+								<Text text="{path: 'totals>col121to365',
+                    type: 'sap.ui.model.odata.type.Decimal', 
+                    formatOptions: { emptyString: null }, constraints: { scale: 3, minimum: '3' } }"
+               />
 							</t:template>
 							</t:Column>
-							<t:Column width="7rem" >
+							<t:Column width="9rem" >
 							<Label text="365 >" />
 							<t:template>
-								<Text text="{totals>col365}" wrapping="false"/>
+								<Text text="{path: 'totals>col365',
+                    type: 'sap.ui.model.odata.type.Decimal', 
+                    formatOptions: { emptyString: null }, constraints: { scale: 3, minimum: '3' } }"
+               />
 							</t:template>
 							</t:Column>
-							<t:Column width="7rem" >
+							<t:Column width="9rem" >
 							<Label text="Total" />
 							<t:template>
-								<Text text="{totals>Total}" wrapping="false"/>
+								<Text text="{path: 'totals>Total',
+                    type: 'sap.ui.model.odata.type.Decimal', 
+                    formatOptions: { emptyString: null }, constraints: { scale: 3, minimum: '3' } }"
+               />
 							</t:template>
 							</t:Column>
 							
@@ -346,97 +431,97 @@
 								<Text text="" wrapping="true"/>
 							</t:template>
 						</t:Column>
-						<t:Column width="7rem" visible="{notdue>/vis}" >
+						<t:Column width="9rem" visible="{notdue>/vis}" >
 							<Label text="{totals>/results/0/col30to0}" />
 							<t:template>
 								<Text text="" wrapping="false"/>
 							</t:template>
 						</t:Column>
-						<t:Column width="7rem" visible="{notdue>/vis}" >
+						<t:Column width="9rem" visible="{notdue>/vis}" >
 							<Label text="{totals>/results/0/col60to30}" />
 							<t:template>
 								<Text text="" wrapping="false"/>
 							</t:template>
 						</t:Column>
-						<t:Column width="7rem" visible="{notdue>/vis}" >
+						<t:Column width="9rem" visible="{notdue>/vis}" >
 							<Label text="{totals>/results/0/col90to60}" />
 							<t:template>
 								<Text text="" wrapping="false"/>
 							</t:template>
 						</t:Column>
-						<t:Column width="7rem" visible="{notdue>/vis}" >
+						<t:Column width="9rem" visible="{notdue>/vis}" >
 							<Label text="{totals>/results/0/col120to90}" />
 							<t:template>
 								<Text text="" wrapping="false"/>
 							</t:template>
 						</t:Column>
-						<t:Column width="7rem" visible="{notdue>/vis}" >
+						<t:Column width="9rem" visible="{notdue>/vis}" >
 							<Label text="{totals>/results/0/col365to120}" />
 							<t:template>
 								<Text text="" wrapping="false"/>
 							</t:template>
 						</t:Column>
-						<t:Column width="7rem" visible="{notdue>/vis}" >
+						<t:Column width="9rem" visible="{notdue>/vis}" >
 							<Label text="{totals>/results/0/col365neg}" />
 							<t:template>
 								<Text text="" wrapping="false"/>
 							</t:template>
 						</t:Column>
-						<t:Column width="7rem" >
+						<t:Column width="9rem" >
 							<Label text="{totals>/results/0/NotDue}" />
 							<t:template>
 								<Text text="" wrapping="false"/>
 							</t:template>
 						</t:Column>
-						<t:Column  width="7rem" >
+						<t:Column  width="9rem" >
 							<Label text="{totals>/results/0/col0to30}"/>
 							<t:template>
 								<Text text="" wrapping="false"/>
 							</t:template>
 						</t:Column>
-						<t:Column width="7rem" >
+						<t:Column width="9rem" >
 							<Label text="{totals>/results/0/col31to60}" />
 							<t:template>
 								<Text text="" wrapping="false"/>
 							</t:template>
 						</t:Column>
-						<t:Column width="7rem" >
+						<t:Column width="9rem" >
 							<Label text="{totals>/results/0/col61to90}" />
 							<t:template>
 								<Text text="" wrapping="false"/>
 							</t:template>
 							</t:Column>
-					<t:Column width="7rem" >
+					<t:Column width="9rem" >
 							<Label text="{totals>/results/0/col91to120}" />
 							<t:template>
 								<Text text="" wrapping="false"/>
 							</t:template>
 							</t:Column>
-					<t:Column width="7rem" >
+					<t:Column width="9rem" >
 							<Label text="{totals>/results/0/col121to365}" />
 							<t:template>
 								<Text text="" wrapping="false"/>
 							</t:template>
 							</t:Column>
-							<t:Column width="7rem" >
+							<t:Column width="9rem" >
 							<Label text="{totals>/results/0/col365}" />
 							<t:template>
 								<Text text="" wrapping="false"/>
 							</t:template>
 							</t:Column>
-							<t:Column width="7rem" >
+							<t:Column width="9rem" >
 							<Label text="{totals>/results/0/Total}" />
 							<t:template>
 								<Text text="" wrapping="false"/>
 							</t:template>
 							</t:Column>
-							<t:Column width="7rem" >
+							<t:Column width="9rem" >
 							<Label text="{totals>/results/0/TypeLocalForeign}" />
 							<t:template>
 								<Text text="" wrapping="false"/>
 							</t:template>
 							</t:Column>
-							<t:Column width="7rem" >
+							<t:Column width="9rem" >
 							<Label text="{totals>/results/0/Typeofservicesdesc}" />
 							<t:template>
 								<Text text="" wrapping="false"/>
