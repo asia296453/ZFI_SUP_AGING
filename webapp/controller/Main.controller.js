@@ -253,6 +253,12 @@ sap.ui.define([
                                     this.getView().getModel("tableModel").setProperty("/results",oData.results);
                                     this.getView().getModel("tableModel").refresh(true);
                                 }
+                                else{
+                                    this.getView().getModel("totals").setProperty("/results",[]);
+                                    this.getView().getModel("totals").refresh(true);
+                                    this.getView().getModel("tableModel").setProperty("/results",[]);
+                                    this.getView().getModel("tableModel").refresh(true);
+                                }
                             }else{
                                 this.getOwnerComponent().getModel(smodelname).setProperty("/results", oData.results);
                             }
