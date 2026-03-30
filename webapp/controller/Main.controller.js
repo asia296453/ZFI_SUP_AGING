@@ -23,7 +23,11 @@ sap.ui.define([
             oval.push(sval);
             this.getOwnerComponent().getModel("typedtls").setProperty("/results", oval);
             this.getOwnerComponent().getModel("typedtls").refresh();
-
+            this.getOwnerComponent().getModel("LocalModel").setProperty("/supvalue", "");            
+            this.getOwnerComponent().getModel("LocalModel").setProperty("/supvalue1", "");  
+            this.getOwnerComponent().getModel("LocalModel").setProperty("/supvalue2", "");
+            this.getOwnerComponent().getModel("LocalModel").setProperty("/supfilter", "");    
+            this.getOwnerComponent().getModel("LocalModel").setProperty("/supvaluekey", "BT");  
             this.getOwnerComponent().getModel("LocalModel").setProperty("/Companycode", "5910");
             this.getOwnerComponent().getModel("LocalModel").setProperty("/P_DateFunction", "TODAY");
             this.getOwnerComponent().getModel("LocalModel").setProperty("/Displaycurrency", "SAR");
@@ -33,6 +37,16 @@ sap.ui.define([
                 this.getOwnerComponent().getModel("notdue").refresh();
         },
 
+        onTabSelect : function(oEvent){
+			var sSelectedTab = oEvent.getParameter("selectedKey");            
+            this.getOwnerComponent().getModel("LocalModel").setProperty("/supvalue", "");            
+            this.getOwnerComponent().getModel("LocalModel").setProperty("/supvalue1", "");  
+            this.getOwnerComponent().getModel("LocalModel").setProperty("/supvalue2", "");
+            this.getOwnerComponent().getModel("LocalModel").setProperty("/supfilter", ""); 
+            
+            this.getOwnerComponent().getModel("LocalModel").refresh();
+		},
+
         updateSerialNo: function (sText) {
             var sTxt = "";
             if (sText !== null && sText !== undefined && sText !== "") {
@@ -41,7 +55,6 @@ sap.ui.define([
             return sTxt;
         },
         sortAllColumns: function (evt) {
-            //asia
             debugger;
             // if (this.updatecount < 2) {
             //     this.updatecount = this.updatecount + 1;
@@ -187,7 +200,72 @@ sap.ui.define([
             };
             this.Currencyf4.open();
         },
+        onOpenSupplier1: function (oEvent) {
+            if (!this.Supplierf41) {
+                this.Supplierf41 = sap.ui.xmlfragment("zfisupaging.fragment.SupplierNew", this);
+                this.getView().addDependent(this.Supplierf41);
+            };
+            this.getOdata("/SupplierSet", "Suppliertable", null);
+            this.getOwnerComponent().getModel("LocalModel").setProperty("/supvalue", "");            
+            this.getOwnerComponent().getModel("LocalModel").setProperty("/supvalue1", "");  
+            this.getOwnerComponent().getModel("LocalModel").setProperty("/supvalue2", "");
+            this.getOwnerComponent().getModel("LocalModel").setProperty("/supfilter", ""); 
+            
+            this.getOwnerComponent().getModel("LocalModel").refresh();
+            this.Supplierf41.open();
 
+        },
+        onclosesupplier1: function (oEvent) {
+            this.Supplierf41.close();
+        },
+        onSearchsup: function (oEvent) {
+            debugger;
+            var sval = this.getModel("LocalModel").getData().supvalue;
+             var oFilter = new sap.ui.model.Filter("Lifnr", sap.ui.model.FilterOperator.EQ, sval);
+             this.getOdata("/SupplierSet", "Suppliertable", oFilter);
+             sap.ui.getCore().byId("suptab").removeSelections();
+        },
+        getfiltersup: function (sval,sval1,sval2,sval3) {
+            var sfilter = '';
+            if (sval === 'BT') {
+                sfilter = new sap.ui.model.Filter(sval3, sap.ui.model.FilterOperator.BT,sval1,sval2);
+            }
+            else if (sval === 'Contains') {
+                sfilter = new sap.ui.model.Filter(sval3, sap.ui.model.FilterOperator.Contains,sval1);
+            }
+            else if (sval === 'EQ') {
+                sfilter = new sap.ui.model.Filter(sval3, sap.ui.model.FilterOperator.EQ,sval1);
+            }
+            return sfilter;
+        },
+        onSearchsupgo: function (oEvent) {
+            debugger;//asia
+            if (this.getOwnerComponent().getModel("LocalModel").getProperty("/supvalue1") !== undefined &&
+                this.getOwnerComponent().getModel("LocalModel").getProperty("/supvalue1") !== '') {
+                var omod = this.getOwnerComponent().getModel("LocalModel").getData();
+                var sfilter = this.getfiltersup(omod.supvaluekey,omod.supvalue1,omod.supvalue2,"Supplier");
+                this.getView().getModel("LocalModel").setProperty("/supfilter", sfilter);
+                debugger;
+                var svl = sfilter.oValue1 + ' - ' +sfilter.oValue2;
+                this.getView().getModel("LocalModel").setProperty("/Supplier",svl);
+                this.getView().getModel("LocalModel").refresh(true);
+            }
+            else {
+                var omodel = sap.ui.getCore().byId("suptab").getItems();
+                var sval = ''; var oval = [];
+                omodel.forEach(oItem => {
+                    if (oItem.getMultiSelectControl().getProperty("selected")) {
+                        oval.push(oItem.getCells()[0].getProperty("text"));
+                    }
+                });
+
+            sap.ui.getCore().byId("suptab").removeSelections();
+            this.getView().getModel("LocalModel").setProperty("/Supplier", oval.join(", "));
+                this.getView().getModel("LocalModel").refresh(true);               
+                        
+                    }
+             this.Supplierf41.close();
+        },
         onOpenSupplier: function (oEvent) {
             this.Supplierf4 = null;
             if (!this.Supplierf4) {
@@ -377,6 +455,10 @@ sap.ui.define([
                     case "sap.m.MultiInput":
                         var ovl = [];
                         var sfilterval = '';
+                        if(oControl.mBindingInfos.value.parts[0].path.split("/")[1] === 'Supplier' 
+                        && this.getView().getModel("LocalModel").getProperty("/supfilter") !== ""){
+
+                        }else{
                         if (oControl.getProperty("value") !== '') {
                             var ovl = oControl.getProperty("value").split(",");
                             for (var i = 0; i < ovl.length; i++) {
@@ -389,6 +471,8 @@ sap.ui.define([
                                 }
 
                             }
+                        }
+                            
                         }
                         break;
 
@@ -404,6 +488,14 @@ sap.ui.define([
                         break;
                 }
             }.bind(this));
+
+            if(this.getView().getModel("LocalModel").getProperty("/supfilter") !== undefined
+                    && this.getView().getModel("LocalModel").getProperty("/supfilter") !== ""){
+                    
+                    aFilters.push(this.getView().getModel("LocalModel").getProperty("/supfilter"));
+            }
+            
+            debugger;
             return aFilters;
         },
         onClearFilterBar: function (oEvent) {
@@ -426,6 +518,11 @@ sap.ui.define([
                         break;
                 }
             });
+            this.getOwnerComponent().getModel("LocalModel").setProperty("/supvalue", "");
+            this.getOwnerComponent().getModel("LocalModel").setProperty("/supvalue1", "");
+            this.getOwnerComponent().getModel("LocalModel").setProperty("/supvalue2", "");
+            this.getOwnerComponent().getModel("LocalModel").setProperty("/supvaluekey", "BT"); 
+            this.getOwnerComponent().getModel("LocalModel").setProperty("/supfilter", "");  
             this.getOwnerComponent().getModel("LocalModel").setProperty("/Companycode", "5910");
             this.getOwnerComponent().getModel("LocalModel").setProperty("/P_DateFunction", "TODAY");
             this.getOwnerComponent().getModel("LocalModel").setProperty("/Displaycurrency", "SAR");

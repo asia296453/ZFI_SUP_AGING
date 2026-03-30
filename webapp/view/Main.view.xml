@@ -74,7 +74,7 @@
                             </fb:control>
                         </fb:FilterGroupItem>
 
-                        <fb:FilterGroupItem
+                        <!-- <fb:FilterGroupItem
                             name="Supplier"
                             label="Supplier"
                             groupName="default"
@@ -85,6 +85,22 @@
                                     value="{LocalModel>/Supplier}"
                                     showValueHelp="true"
                                     valueHelpRequest="onOpenSupplier"
+                                    valueHelpOnly="true"
+                                />
+                            </fb:control>
+                        </fb:FilterGroupItem> -->
+
+						  <fb:FilterGroupItem
+                            name="Supplier"
+                            label="Supplier"
+                            groupName="default"
+                            visibleInFilterBar="true"
+                        >
+                            <fb:control>
+                                <MultiInput
+                                    value="{LocalModel>/Supplier}"
+                                    showValueHelp="true"
+                                    valueHelpRequest="onOpenSupplier1"
                                     valueHelpOnly="true"
                                 />
                             </fb:control>

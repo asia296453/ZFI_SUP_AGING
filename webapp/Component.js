@@ -25,6 +25,8 @@ sap.ui.define([
             this.setModel(new sap.ui.model.json.JSONModel(), "tableModel");
             this.setModel(new sap.ui.model.json.JSONModel(), "notdue");
             this.setModel(new sap.ui.model.json.JSONModel(), "totals");
+            this.setModel(new sap.ui.model.json.JSONModel(), "Suppliertable");
+            
             // enable routing
             this.getRouter().initialize();
         }

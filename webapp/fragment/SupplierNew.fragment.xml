@@ -1,0 +1,97 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	  xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+ <Dialog
+        id="openDialog"
+        title="Supplier"
+    >
+	<IconTabBar
+                id="idIconTabBarMulti"
+                expanded="{device>/isNoPhone}"
+                class="sapUiResponsiveContentPadding"
+				select=".onTabSelect"
+            >
+                <items>
+                    <IconTabFilter
+                        text="Search and Select" key="1"
+                    >
+
+					
+					 <f:SimpleForm title=""
+            editable="true"
+            layout="ResponsiveGridLayout"
+            labelSpanXL="12"
+            labelSpanL="12"
+            labelSpanM="12"
+            labelSpanS="12"
+            adjustLabelSpan="false"
+            emptySpanXL="0"
+            emptySpanL="0"
+            emptySpanM="0"
+            emptySpanS="0"
+            columnsXL="1"
+            columnsL="1"
+            columnsM="1"
+            singleContainerFullSize="false"
+            class="formNoTitle zspacerem"
+        >
+            <f:content>
+                <core:Title />
+				<HBox >
+				<SearchField value="{LocalModel>/supvalue}" width="100%" search="onSearchsup" />
+				<Button text="Go" press="onSearchsup" class="zbtn"/>
+				</HBox>
+			    <core:Title />
+				 <Table id="suptab" mode="MultiSelect"
+                    items="{path:'Suppliertable>/results',templateShareable: false}"
+                >
+                    <columns>
+                        <Column>
+                            <Text text="Supplier" />
+                        </Column>
+                        <Column>
+                            <Text text="Name" />
+                        </Column>                        
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <Text text='{Suppliertable>Lifnr}' />
+                              <Text text='{Suppliertable>Name1}' />
+                        </ColumnListItem>
+                    </items>
+                </Table>
+				<core:Title />
+		      
+            </f:content>			
+        </f:SimpleForm>
+					 </IconTabFilter>
+                    <IconTabFilter  text="Define Conditions" key="2">
+					<HBox >
+					<ComboBox selectedKey="{LocalModel>/supvaluekey}" change="onchangesupkey">				
+					<items>
+					    <core:Item   key="Contains"    text="Contains" />
+						<core:Item   key="EQ"    text="equal to" />
+						<core:Item   key="BT"    text="between" />
+						
+					</items>					
+				</ComboBox>
+				
+				<Input value="{LocalModel>/supvalue1}" class="zinp"/>
+				<Input value="{LocalModel>/supvalue2}" class="zinp" visible="{= ${LocalModel>/supvaluekey}==='BT'? true : false}"/>
+				</HBox>
+					</IconTabFilter>
+                </items>
+            </IconTabBar>
+			<beginButton>
+			<Button text="OK" press="onSearchsupgo" />
+			</beginButton>
+		<endButton>
+			<Button
+                text="Cancel"
+                press="onclosesupplier1"
+            />
+		</endButton>
+	
+    </Dialog>
+</core:FragmentDefinition>
